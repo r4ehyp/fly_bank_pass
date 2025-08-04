@@ -100,4 +100,7 @@ fly_bank_pass/
 - 定期备份重要密码
 - 遵守相关银行的密码使用规定
 ## 📄 许可证
-MIT License - 详见LICENSE文件   
+MIT License 
+
+## Git 仓库 
+https://github.com/r4ehyp/fly_bank_pass
