@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飞行银行卡密码生成器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            padding: 30px;
+        }
+
+        .section:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
+
+        .section h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h2::before {
+            content: "🔐";
+            font-size: 1.2em;
+        }
+
+        .how-it-works h2::before {
+            content: "❓";
+        }
+
+        .security-tips h2::before {
+            content: "🛡️";
+        }
+
+        .section p, .section li {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .section ul {
+            margin-left: 20px;
+        }
+
+        .highlight {
+            background: #f7fafc;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .generator-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .generator-section h2 {
+            color: white;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+        }
+
+        .generate-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .generate-btn:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .password-display {
+            font-size: 2.5em;
+            font-weight: bold;
+            letter-spacing: 0.2em;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn {
+            background: #38a169;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #2f855a;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 30px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+
+        .warning {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #e53e3e;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 飞行银行卡密码生成器</h1>
+            <p>安全、便捷、私密的密码生成工具</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 密码生成流程说明 -->
+            <div class="section how-it-works">
+                <h2>密码是如何生成的？</h2>
+                <p>为了方便记忆和提升安全性，本工具基于以下方式生成6位数字密码：</p>
+                <ul>
+                    <li>用户输入关联文字（例如：银行卡号后6位 + 固定密钥）</li>
+                    <li>系统将关联文字计算其 SHA256 哈希值</li>
+                    <li>从哈希结果中提取前6位数字作为最终密码</li>
+                </ul>
+                <div class="highlight">
+                    <p><span class="emoji">👉</span><strong>同一个关联文字，每次生成的密码都是一致的；</strong></p>
+                    <p><span class="emoji">👉</span><strong>不同的关联文字，即使相似，也会生成完全不同的密码。</strong></p>
+                </div>
+            </div>
+
+            <!-- 密码生成界面 -->
+            <div class="section generator-section">
+                <h2>生成您的专属密码</h2>
+                <div class="input-group">
+                    <label for="associatedText">请输入关联文字：</label>
+                    <input type="text" id="associatedText" placeholder="例如：123456mykey 或 卡号后6位+固定密钥">
+                </div>
+                <button class="generate-btn" onclick="generatePassword()">🔐 生成密码</button>
+                
+                <div class="result" id="result">
+                    <p>您的6位数字密码是：</p>
+                    <div class="password-display" id="passwordDisplay"></div>
+                    <button class="copy-btn" onclick="copyPassword()">📋 复制密码</button>
+                </div>
+            </div>
+
+            <!-- 安全性说明 -->
+            <div class="section security-tips">
+                <h2>如何进一步增强密码安全？</h2>
+                <p>为进一步提升密码的强度和不可预测性，你可以采用以下技巧：</p>
+                <ul>
+                    <li><strong>同一张银行卡设置多个密码段：</strong>如"卡号后6位 + 私人代号"、"生日倒写 + 固定密钥"等</li>
+                    <li><strong>拼接多个6位密码形成更复杂的真实密码：</strong>例如将2个不同关联文字生成的密码连接，得到12位密码</li>
+                    <li><strong>定期更换关联文字：</strong>无需记录密码，只需记住规则</li>
+                </ul>
+                <div class="warning">
+                    <p><span class="emoji">⚠️</span><strong>本工具完全基于浏览器前端，不会联网或保存你的任何信息，确保安全私密。</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 飞行银行卡密码生成器 | 保护您的数字资产安全</p>
+            <p>本工具完全离线运行，保障您的隐私安全</p>
+        </footer>
+    </div>
+
+    <script>
+        // SHA256 实现
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        // 从哈希值中提取前6位数字
+        function extractSixDigits(hash) {
+            let digits = '';
+            for (let i = 0; i < hash.length && digits.length < 6; i++) {
+                if (/\d/.test(hash[i])) {
+                    digits += hash[i];
+                }
+            }
+            // 如果数字不足6位，用哈希值的数值模运算补充
+            while (digits.length < 6) {
+                const hashNum = parseInt(hash.substring(digits.length * 2, (digits.length + 1) * 2), 16);
+                digits += (hashNum % 10).toString();
+            }
+            return digits.substring(0, 6);
+        }
+
+        // 生成密码
+        async function generatePassword() {
+            const associatedText = document.getElementById('associatedText').value.trim();
+            
+            if (!associatedText) {
+                alert('请输入关联文字！');
+                return;
+            }
+
+            try {
+                const hash = await sha256(associatedText);
+                const password = extractSixDigits(hash);
+                
+                document.getElementById('passwordDisplay').textContent = password;
+                document.getElementById('result').classList.add('show');
+            } catch (error) {
+                alert('生成密码时出现错误，请重试！');
+                console.error('Error generating password:', error);
+            }
+        }
+
+        // 复制密码到剪贴板
+        async function copyPassword() {
+            const password = document.getElementById('passwordDisplay').textContent;
+            try {
+                await navigator.clipboard.writeText(password);
+                const copyBtn = document.querySelector('.copy-btn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ 已复制';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            } catch (error) {
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = password;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('密码已复制到剪贴板！');
+            }
+        }
+
+        // 回车键生成密码
+        document.getElementById('associatedText').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generatePassword();
+            }
+        });
+    </script>
+</body>
+</html>
