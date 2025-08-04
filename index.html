@@ -22,12 +22,45 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+        }
+
+        /* GitHub链接样式 */
+        .github-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .github-link::before {
+            content: "⭐";
+            font-size: 16px;
         }
 
         header {
             text-align: center;
             margin-bottom: 40px;
             color: white;
+            margin-top: 60px; /* 为GitHub链接留出空间 */
         }
 
         header h1 {
@@ -218,6 +251,17 @@
                 padding: 10px;
             }
             
+            .github-link {
+                position: static;
+                margin: 0 auto 20px;
+                display: inline-flex;
+                width: fit-content;
+            }
+            
+            header {
+                margin-top: 20px;
+            }
+            
             header h1 {
                 font-size: 2em;
             }
@@ -230,6 +274,11 @@
 </head>
 <body>
     <div class="container">
+        <!-- GitHub链接 -->
+        <a href="https://github.com/r4ehyp/fly_bank_pass" target="_blank" class="github-link">
+            GitHub
+        </a>
+        
         <header>
             <h1>🏦 飞行银行卡密码生成器</h1>
             <p>安全、便捷、私密的密码生成工具</p>
@@ -270,7 +319,7 @@
             <!-- 安全性说明 -->
             <div class="section security-tips">
                 <h2>如何进一步增强密码安全？</h2>
-                <p>为进一步提升密码的强度和不可预测性，你可以采用以下技巧：</p>
+                <p>进一步提升密码的强度和不可预测性，你可以采用以下技巧：</p>
                 <ul>
                     <li><strong>同一张银行卡设置多个密码段：</strong>如"卡号后6位 + 私人代号"、"生日倒写 + 固定密钥"等</li>
                     <li><strong>拼接多个6位密码形成更复杂的真实密码：</strong>例如将2个不同关联文字生成的密码连接，得到12位密码</li>
@@ -283,8 +332,7 @@
         </div>
 
         <footer>
-            <p>© 2025 飞行银行卡密码生成器 | 保护您的数字资产安全 | git仓库：<a href="https://github.com/r4ehyp/fly_bank_pass">https://github.com/r4ehyp/fly_bank_pass</a></p> 
-            <p>本工具完全离线运行，保障您的隐私安全</p>
+            <p>© 2025 飞行银行卡密码生成器 | 保护您的数字资产安全 | git仓库：<a href="https://github.com/r4ehyp/fly_bank_pass">https://github.com/r4ehyp/fly_bank_pass</a></p>
         </footer>
     </div>
 
